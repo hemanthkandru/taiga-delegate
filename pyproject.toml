@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "taiga-delegate"
+version = "0.1.0"
+description = "Delegate your Taiga board to AI agents — an MCP server with per-agent scoped tokens, attribution, and usage metering"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+keywords = ["taiga", "mcp", "mcp-server", "ai-agents", "project-management"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Bug Tracking",
+]
+dependencies = [
+    "mcp>=2.0",
+    "python-taiga>=1.3",
+    "httpx>=0.27",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+taiga-delegate = "taiga_delegate.server.main:main"
+
+[project.urls]
+Homepage = "https://github.com/hemanthkandru/taiga-delegate"
+Issues = "https://github.com/hemanthkandru/taiga-delegate/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/taiga_delegate"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# Tool descriptions are long single strings by design; wrapping them hurts more than it helps.
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

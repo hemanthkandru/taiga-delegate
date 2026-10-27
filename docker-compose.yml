@@ -1,0 +1,20 @@
+services:
+  taiga-delegate:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      TAIGA_URL: "${TAIGA_URL}"
+      TAIGA_USERNAME: "${TAIGA_USERNAME:-}"
+      TAIGA_PASSWORD: "${TAIGA_PASSWORD:-}"
+      TAIGA_TOKEN: "${TAIGA_TOKEN:-}"
+      MCP_TRANSPORT: http
+      MCP_AUTH_TOKEN: "${MCP_AUTH_TOKEN}"
+      MCP_SCOPED_TOKENS: "${MCP_SCOPED_TOKENS:-}"
+      MCP_USAGE_LOG: /data/usage.jsonl
+    volumes:
+      - usage-data:/data
+
+volumes:
+  usage-data:
